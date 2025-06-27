@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Commands Tutorial - Cyber Security Toolkit</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Override main CSS overflow hidden */
+        body {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        .linux-container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            min-height: auto;
+            box-sizing: border-box;
+        }
+        
+        .linux-header {
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .linux-header.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        .linux-title {
+            font-size: 2.2em;
+            color: #00eaff;
+            text-shadow: 0 0 12px #00eaff;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .linux-subtitle {
+            font-size: 1.1em;
+            color: #e6e6f0;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+        
+        .command-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .command-categories.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-100%);
+        }
+        
+        .category-card {
+            background: rgba(20, 24, 38, 0.95);
+            border-radius: 10px;
+            padding: 18px;
+            border: 2px solid #00eaff;
+            box-shadow: 0 0 20px #00eaff44;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px #00eaff66;
+        }
+        
+        .category-icon {
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            color: #00eaff;
+        }
+        
+        .category-title {
+            font-size: 1.2em;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .category-desc {
+            color: #e6e6f0;
+            font-size: 0.9em;
+            line-height: 1.3;
+        }
+        
+        .linux-main {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%);
+            background: rgba(20, 24, 38, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #00eaff;
+            box-shadow: 0 0 20px #00eaff44;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .linux-main.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        
+        .back-btn {
+            background: #ff1744;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 0.95em;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #d50000;
+        }
+        
+        .command-list {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+            height: 500px;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .command-sidebar {
+            background: #181a2a;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 500px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .command-item {
+            padding: 10px;
+            margin-bottom: 6px;
+            background: #23243a;
+            border-radius: 6px;
+            color: #e6e6f0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid transparent;
+            transform: scale(1);
+            font-size: 0.9em;
+        }
+        
+        .command-item:hover {
+            background: #00eaff;
+            color: #181a2a;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 234, 255, 0.3);
+        }
+        
+        .command-item.selected {
+            background: #00eaff;
+            color: #181a2a;
+            border-left-color: #00eaff;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 234, 255, 0.4);
+        }
+        
+        .command-content {
+            display: flex;
+            flex-direction: column;
+            max-height: 500px;
+            overflow-y: auto;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .command-info {
+            margin-bottom: 15px;
+        }
+        
+        .command-title {
+            font-size: 1.6em;
+            color: #00eaff;
+            margin-bottom: 8px;
+        }
+        
+        .command-syntax {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-family: 'Courier New', monospace;
+            color: #4CAF50;
+            font-size: 13px;
+            word-wrap: break-word;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .command-description {
+            color: #e6e6f0;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        
+        .command-examples {
+            margin-bottom: 15px;
+        }
+        
+        .example-title {
+            color: #ff1744;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .example-item {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #fff;
+            word-wrap: break-word;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .linux-terminal {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            height: 250px;
+            overflow-y: auto;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #fff;
+            line-height: 1.3;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .terminal-prompt {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .terminal-command {
+            color: #fff;
+        }
+        
+        .terminal-output {
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .terminal-highlight {
+            color: #FF9800;
+        }
+        
+        .terminal-success {
+            color: #4CAF50;
+        }
+        
+        .terminal-error {
+            color: #f44336;
+        }
+        
+        .terminal-info {
+            color: #2196F3;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .linux-container {
+                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .linux-title {
+                font-size: 1.8em;
+            }
+            
+            .command-categories {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .command-list {
+                grid-template-columns: 1fr;
+                height: auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .command-sidebar {
+                max-height: 200px;
+                order: 2;
+                width: 100%;
+            }
+            
+            .command-content {
+                order: 1;
+                max-height: none;
+                width: 100%;
+            }
+            
+            .linux-terminal {
+                height: 200px;
+                width: 100%;
+            }
+            
+            .command-syntax,
+            .example-item {
+                white-space: normal;
+                word-wrap: break-word;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .linux-container {
+                padding: 10px;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .linux-title {
+                font-size: 1.5em;
+            }
+            
+            .linux-subtitle {
+                font-size: 1em;
+            }
+            
+            .category-card {
+                padding: 15px;
+                width: 100%;
+            }
+            
+            .category-icon {
+                font-size: 1.5em;
+            }
+            
+            .category-title {
+                font-size: 1.1em;
+            }
+            
+            .command-list {
+                gap: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .command-sidebar {
+                padding: 12px;
+                width: 100%;
+            }
+            
+            .command-item {
+                padding: 8px;
+                font-size: 0.85em;
+                width: 100%;
+            }
+            
+            .linux-terminal {
+                height: 180px;
+                font-size: 10px;
+                width: 100%;
+            }
+            
+            .command-syntax,
+            .example-item {
+                white-space: normal;
+                word-wrap: break-word;
+                font-size: 11px;
+            }
+        }
+        
+        /* Ensure proper scrolling on all devices */
+        html, body {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        /* Custom scrollbar for better UX */
+        .command-sidebar::-webkit-scrollbar,
+        .command-content::-webkit-scrollbar,
+        .linux-terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .command-sidebar::-webkit-scrollbar-track,
+        .command-content::-webkit-scrollbar-track,
+        .linux-terminal::-webkit-scrollbar-track {
+            background: #1e1e1e;
+            border-radius: 4px;
+        }
+        
+        .command-sidebar::-webkit-scrollbar-thumb,
+        .command-content::-webkit-scrollbar-thumb,
+        .linux-terminal::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        
+        .command-sidebar::-webkit-scrollbar-thumb:hover,
+        .command-content::-webkit-scrollbar-thumb:hover,
+        .linux-terminal::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    <script src="linux.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-logo">
+                <img src="logo.png" alt="SudoNow Logo" class="page-logo">
+            </div>
+            <h1>Linux Commands Tutorial</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="red.html">Red Hat</a>
+                <a href="blue.html">Blue Hat</a>
+                <a href="ctf.html">CTF</a>
+            </nav>
+        </header>
+        
+        <div class="linux-container">
+            <div class="linux-header" id="linux-header">
+                <h1 class="linux-title">🐧 Linux Commands Tutorial</h1>
+                <p class="linux-subtitle">Master essential Linux commands with interactive examples</p>
+            </div>
+            
+            <div class="command-categories" id="command-categories">
+                <div class="category-card" onclick="showCategory('navigation')">
+                    <div class="category-icon">📁</div>
+                    <div class="category-title">File Navigation</div>
+                    <div class="category-desc">Learn to navigate directories, list files, and understand file permissions</div>
+                </div>
+                <div class="category-card" onclick="showCategory('files')">
+                    <div class="category-icon">📄</div>
+                    <div class="category-title">File Operations</div>
+                    <div class="category-desc">Create, copy, move, delete files and directories</div>
+                </div>
+                <div class="category-card" onclick="showCategory('system')">
+                    <div class="category-icon">⚙️</div>
+                    <div class="category-title">System Commands</div>
+                    <div class="category-desc">Monitor system resources, processes, and system information</div>
+                </div>
+                <div class="category-card" onclick="showCategory('network')">
+                    <div class="category-icon">🌐</div>
+                    <div class="category-title">Network Commands</div>
+                    <div class="category-desc">Network connectivity, DNS, and network troubleshooting</div>
+                </div>
+                <div class="category-card" onclick="showCategory('text')">
+                    <div class="category-icon">📝</div>
+                    <div class="category-title">Text Processing</div>
+                    <div class="category-desc">Search, filter, and manipulate text files</div>
+                </div>
+                <div class="category-card" onclick="showCategory('security')">
+                    <div class="category-icon">🔒</div>
+                    <div class="category-title">Security Commands</div>
+                    <div class="category-desc">File permissions, user management, and security tools</div>
+                </div>
+                <div class="category-card" onclick="showCategory('package')">
+                    <div class="category-icon">📦</div>
+                    <div class="category-title">Package Management</div>
+                    <div class="category-desc">Install, update, and remove software packages</div>
+                </div>
+                <div class="category-card" onclick="showCategory('disk')">
+                    <div class="category-icon">💽</div>
+                    <div class="category-title">Disk Management</div>
+                    <div class="category-desc">Partition, format, and mount disks</div>
+                </div>
+                <div class="category-card" onclick="showCategory('users')">
+                    <div class="category-icon">👥</div>
+                    <div class="category-title">Users & Groups</div>
+                    <div class="category-desc">Manage users, groups, and permissions</div>
+                </div>
+                <div class="category-card" onclick="showCategory('services')">
+                    <div class="category-icon">🔧</div>
+                    <div class="category-title">Services</div>
+                    <div class="category-desc">Start, stop, and manage system services</div>
+                </div>
+                <div class="category-card" onclick="showCategory('scripting')">
+                    <div class="category-icon">💻</div>
+                    <div class="category-title">Scripting</div>
+                    <div class="category-desc">Automate tasks with shell scripts</div>
+                </div>
+            </div>
+            
+            <div class="linux-main" id="linux-main">
+                <button class="back-btn" onclick="showCategories()">← Back to Categories</button>
+                
+                <div class="command-list">
+                    <div class="command-sidebar" id="command-sidebar">
+                        <!-- Commands will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="command-content">
+                        <div class="command-info" id="command-info">
+                            <h2 class="command-title">Select a command to learn</h2>
+                            <p class="command-description">Choose a command from the sidebar to see detailed information and examples.</p>
+                        </div>
+                        
+                        <div class="linux-terminal" id="linux-terminal">
+                            <div class="terminal-output">
+                                <span class="terminal-prompt">user@linux-tutorial:~$</span> <span class="terminal-command">welcome</span>
+                            </div>
+                            <div class="terminal-output">
+                                Welcome to the Linux Commands Tutorial!<br>
+                                Select a category and command to start learning.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

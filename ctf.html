@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Challenges | Hack Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .coming-soon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .coming-soon-icon {
+            font-size: 8em;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .coming-soon-title {
+            font-size: 3em;
+            color: #00eaff;
+            text-shadow: 0 0 20px #00eaff;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .coming-soon-subtitle {
+            font-size: 1.5em;
+            color: #e6e6f0;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .coming-soon-description {
+            font-size: 1.1em;
+            color: #b0b0b0;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        
+        .progress-bar {
+            width: 300px;
+            height: 6px;
+            background: rgba(0, 234, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00eaff, #b388ff);
+            border-radius: 3px;
+            animation: progress 3s ease-in-out infinite;
+        }
+        
+        .back-btn {
+            background: linear-gradient(45deg, #ff1744, #d50000);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 23, 68, 0.4);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 0%; }
+        }
+        
+        @media (max-width: 768px) {
+            .coming-soon-icon {
+                font-size: 6em;
+            }
+            
+            .coming-soon-title {
+                font-size: 2.5em;
+            }
+            
+            .coming-soon-subtitle {
+                font-size: 1.3em;
+            }
+            
+            .progress-bar {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-logo">
+                <img src="logo.png" alt="SudoNow Logo" class="page-logo">
+            </div>
+            <h1>CTF Challenges</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="red.html">Red Hat</a>
+                <a href="blue.html">Blue Hat</a>
+                <a href="linux.html">Linux</a>
+            </nav>
+        </header>
+        
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">🚧</div>
+            <h1 class="coming-soon-title">Coming Soon</h1>
+            <h2 class="coming-soon-subtitle">Work in Progress</h2>
+            <p class="coming-soon-description">
+                We're working hard to bring you an amazing CTF (Capture The Flag) experience! 
+                Get ready for challenging cybersecurity puzzles, realistic scenarios, and interactive learning.
+            </p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            
+            <p style="color: #888; font-size: 0.9em; margin-bottom: 30px;">
+                Development Progress: 35%
+            </p>
+            
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html> 

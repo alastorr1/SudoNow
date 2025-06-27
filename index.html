@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SudoNow: Choose Your Path</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Binary Waterfall Background -->
+    <div class="binary-waterfall">
+        <div class="binary-column" id="col1"></div>
+        <div class="binary-column" id="col2"></div>
+        <div class="binary-column" id="col3"></div>
+        <div class="binary-column" id="col4"></div>
+        <div class="binary-column" id="col5"></div>
+    </div>
+    
+    <!-- Matrix Rain Effect -->
+    <div class="matrix-rain" id="matrix-rain"></div>
+    
+    <!-- Scanning Line Effect -->
+    <div class="scan-line"></div>
+    
+    <!-- Glitch Effect Overlay -->
+    <div class="glitch-overlay"></div>
+    
+    <div class="landing-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="SudoNow Logo" class="main-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="text-logo" style="display: none;">
+                <span class="logo-text">SudoNow</span>
+                <span class="logo-subtext"></span>
+            </div>
+        </div>
+        <h1 class="landing-title">SudoNow</h1>
+        <h2 class="landing-subtitle">Red Hat vs Blue Hat</h2>
+        <p class="landing-desc">Choose your path: Offensive (Red Hat) or Defensive (Blue Hat). Explore real-world hacking and defense tools in a safe, interactive environment.</p>
+        
+        <div class="choice-cards">
+            <a href="red.html" class="choice-card red">
+                <div class="choice-icon">&#128421;</div>
+                <div class="choice-label">Red Hat<br><span>Offensive</span></div>
+            </a>
+            <a href="blue.html" class="choice-card blue">
+                <div class="choice-icon">&#128737;</div>
+                <div class="choice-label">Blue Hat<br><span>Defensive</span></div>
+            </a>
+            <a href="ctf.html" class="choice-card ctf">
+                <div class="choice-icon">🏁</div>
+                <div class="choice-label">CTF Challenges<br><span>Practice & Compete</span></div>
+            </a>
+            <a href="linux.html" class="choice-card linux">
+                <div class="choice-icon">🐧</div>
+                <div class="choice-label">Linux Commands<br><span>Learn & Practice</span></div>
+            </a>
+        </div>
+        
+        <div class="features-section">
+            <h3>🚀 Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <span class="feature-text">Interactive Terminal</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📚</span>
+                    <span class="feature-text">Real-world Tools</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <span class="feature-text">Step-by-step Learning</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛡️</span>
+                    <span class="feature-text">Safe Environment</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This is a simulation for educational purposes only. All tools and techniques demonstrated are to be used ethically and legally. Unauthorized hacking is illegal and punishable by law.</p>
+        </div>
+        
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Educational cybersecurity platform for learning offensive and defensive security techniques in a safe environment.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="red.html">Red Team Tools</a></li>
+                        <li><a href="blue.html">Blue Team Tools</a></li>
+                        <li><a href="ctf.html">CTF Challenges</a></li>
+                        <li><a href="linux.html">Linux Tutorial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#" onclick="showResource('ethical')">Ethical Hacking Guide</a></li>
+                        <li><a href="#" onclick="showResource('career')">Cybersecurity Career</a></li>
+                        <li><a href="#" onclick="showResource('certifications')">Certifications</a></li>
+                        <li><a href="#" onclick="showResource('tools')">Security Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cyber Security Toolkit. Built for educational purposes.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        function showResource(type) {
+            const resources = {
+                ethical: "Learn ethical hacking principles, responsible disclosure, and legal frameworks for cybersecurity professionals.",
+                career: "Explore cybersecurity career paths, job roles, and industry trends in offensive and defensive security.",
+                certifications: "Discover valuable cybersecurity certifications like CompTIA Security+, CEH, CISSP, and OSCP.",
+                tools: "Explore essential security tools for penetration testing, incident response, and threat hunting."
+            };
+            alert(resources[type] || "Resource information coming soon!");
+        }
+        
+        // Binary Waterfall Effect - Optimized
+        function createBinaryWaterfall() {
+            const columns = document.querySelectorAll('.binary-column');
+            const binaryChars = ['0', '1'];
+            
+            columns.forEach((column, index) => {
+                const delay = index * 500; // Increased delay
+                
+                setInterval(() => {
+                    const char = document.createElement('div');
+                    char.className = 'binary-char';
+                    char.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+                    char.style.left = Math.random() * 100 + '%';
+                    char.style.animationDelay = Math.random() * 3 + 's';
+                    char.style.animationDuration = (Math.random() * 4 + 6) + 's'; // Slower animation
+                    
+                    column.appendChild(char);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (char.parentNode) {
+                            char.parentNode.removeChild(char);
+                        }
+                    }, 10000); // Longer duration
+                }, 300 + delay); // Slower generation
+            });
+        }
+        
+        // Matrix Rain Effect - Optimized
+        function createMatrixRain() {
+            const matrixContainer = document.getElementById('matrix-rain');
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+            const columns = Math.floor(window.innerWidth / 40); // Fewer columns
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = i * 40 + 'px'; // Wider spacing
+                column.style.animationDelay = Math.random() * 3 + 's';
+                column.style.animationDuration = (Math.random() * 4 + 6) + 's'; // Slower
+                
+                // Create fewer characters per column
+                for (let j = 0; j < 15; j++) { // Reduced from 20 to 15
+                    const char = document.createElement('span');
+                    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                    char.style.animationDelay = j * 0.2 + 's'; // Slower
+                    column.appendChild(char);
+                }
+                
+                matrixContainer.appendChild(column);
+            }
+        }
+        
+        // Glitch Effect - Less frequent
+        function createGlitchEffect() {
+            const glitchOverlay = document.querySelector('.glitch-overlay');
+            
+            setInterval(() => {
+                if (Math.random() < 0.05) { // Reduced from 0.1 to 0.05 (5% chance)
+                    glitchOverlay.style.opacity = '0.2'; // Reduced opacity
+                    glitchOverlay.style.transform = 'translateX(' + (Math.random() * 6 - 3) + 'px)'; // Smaller movement
+                    
+                    setTimeout(() => {
+                        glitchOverlay.style.opacity = '0';
+                        glitchOverlay.style.transform = 'translateX(0)';
+                    }, 80); // Shorter duration
+                }
+            }, 3000); // Less frequent (3 seconds instead of 2)
+        }
+        
+        // Particle System - Reduced count
+        function createParticles() {
+            const particleContainer = document.createElement('div');
+            particleContainer.className = 'particle-container';
+            document.body.appendChild(particleContainer);
+            
+            for (let i = 0; i < 25; i++) { // Reduced from 50 to 25
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's'; // Longer delay
+                particle.style.animationDuration = (Math.random() * 15 + 20) + 's'; // Much slower
+                particleContainer.appendChild(particle);
+            }
+        }
+        
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize effects
+            createBinaryWaterfall();
+            createMatrixRain();
+            createGlitchEffect();
+            createParticles();
+            
+            // Add hover effects to choice cards
+            const choiceCards = document.querySelectorAll('.choice-card');
+            choiceCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) rotate(-1deg)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+            
+            // Add typing effect to title
+            const title = document.querySelector('.landing-title');
+            if (title) {
+                const originalText = title.textContent;
+                title.textContent = '';
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        title.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 100);
+                    }
+                };
+                setTimeout(typeWriter, 500);
+            }
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Resize handler for matrix rain
+        window.addEventListener('resize', function() {
+            const matrixContainer = document.getElementById('matrix-rain');
+            matrixContainer.innerHTML = '';
+            createMatrixRain();
+        });
+    </script>
+</body>
+</html>
