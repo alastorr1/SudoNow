@@ -1,5 +1,4 @@
 # SudoNow
-SudoNow
 =======
 
 Overview
@@ -30,8 +29,8 @@ Usage
 Credits
 -------
 - Project: SudoNow
-- Author: [Your Name or Team]
-- Logo: Custom PNG provided by user
+- Author: [slim-brahem]
+
 - Inspired by real-world cybersecurity tools and educational platforms
 
 Disclaimer
